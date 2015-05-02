@@ -7,16 +7,16 @@ angular.module('reactorApp')
     return {
 
       getPilots: function() {
-        var promise = $http.get('/api/flights/pilots').success(function(response) {
-          console.log("success retrieving pilots");
+        var promise = $http.get('/api/flights/pilots').success(function() {
+          console.log('success retrieving pilots');
         }).error(function(){
-          console.log("getPilots error retrieving pilots");
+          console.log('getPilots error retrieving pilots');
         });
         return promise;
       },
 
       getFlightsByPilot: function (pilot) {
-        var promise = $http.get('/api/flights/pilot/' + pilot).success(function(flights) {
+        var promise = $http.get('/api/flights/pilot/' + pilot).success(function() {
           console.log('success retrieving flights');
         }).error(function(){
           console.log('getFlightsByPilot error retrieving flights for - ', pilot);

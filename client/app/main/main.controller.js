@@ -2,7 +2,7 @@
 
 angular.module('reactorApp')
   .controller('MainCtrl', function ($scope, $http, socket, FlightService) {
-    $scope.flights = [];
+    $scope.flights = [1,2,3,4];
     $scope.pilots = [1,2,3];
     // $scope.awesomeThings = [];
 
@@ -16,14 +16,14 @@ angular.module('reactorApp')
     });
 
     $scope.getFlightsByPilot = function(pilot){
-      console.log("pilot: ", pilot);
-    }
+      console.log('pilot: ', pilot);
+    };
 
     $scope.updateResults = function(pilot){
       FlightService.getFlightsByPilot(pilot).then(function(response){
         $scope.flights = response.data;
-      })
-    }
+      });
+    };
 
     $scope.addThing = function() {
       if($scope.newThing === '') {
