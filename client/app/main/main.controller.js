@@ -21,6 +21,10 @@ angular.module('reactorApp')
 
     $scope.updateResults = function(pilot){
       FlightService.getFlightsByPilot(pilot).then(function(response){
+        _.forEach(response.data, function(item){
+          var d = item.date;
+          item.date = moment(Number(d)).format('Do MMMM YYYY');
+        });
         $scope.flights = response.data;
       });
     };

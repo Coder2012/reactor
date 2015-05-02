@@ -43,7 +43,7 @@ exports.show = function(req, res) {
 };
 
 exports.findByPilot = function(req, res) {
-  Flight.find({pilot: req.params.pilot}, function (err, flight) {
+  Flight.find({pilot: req.params.pilot}).sort('-score').exec(function (err, flight) {
     if(err) { return handleError(res, err); }
     if(!flight) { return res.send(404); }
     return res.json(flight);

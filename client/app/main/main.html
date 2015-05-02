@@ -17,6 +17,17 @@
   </div>
 </div>
 
+<div class="grid">
+  <div class="grid__item" ng-repeat="flight in flights">
+    <div class="flight">
+      <h2 class="heading-large flight__pilot"><span class="flight__index" ng-class="{double: ($index > 8 && $index <= 98 ), triple: ($index > 98)}" data-index="{{$index + 1}}"></span>{{flight.pilot}}</h2>
+      <h3 class="heading-medium flight__title">{{flight.title}}</h3>
+      <time class="fa fa-calendar">{{flight.date}}</time>
+      <span>{{flight.score}}</span>
+    </div>
+  </div>
+</div>
+
 <div class="container">
   <div class="row">
     <div class="col-lg-12">
