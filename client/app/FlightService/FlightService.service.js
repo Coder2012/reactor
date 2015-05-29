@@ -15,11 +15,68 @@ angular.module('reactorApp')
         return promise;
       },
 
+      getClubs: function() {
+        var promise = $http.get('/api/flights/clubs').success(function() {
+          console.log('success retrieving clubs');
+        }).error(function(){
+          console.log('getClubs error retrieving clubs');
+        });
+        return promise;
+      },
+
+      getTypes: function() {
+        var promise = $http.get('/api/flights/types').success(function() {
+          console.log('success retrieving types');
+        }).error(function(){
+          console.log('getTypes error retrieving types');
+        });
+        return promise;
+      },
+
+      getSites: function() {
+        var promise = $http.get('/api/flights/sites').success(function() {
+          console.log('success retrieving sites');
+        }).error(function(){
+          console.log('getSites error retrieving sites');
+        });
+        return promise;
+      },
+
       getFlightsByPilot: function (pilot) {
         var promise = $http.get('/api/flights/pilot/' + pilot).success(function() {
           console.log('success retrieving flights');
         }).error(function(){
           console.log('getFlightsByPilot error retrieving flights for - ', pilot);
+        });
+        return promise;
+      },
+
+      getFlightsByClub: function (club) {
+        console.log("club: ", club);
+        var promise = $http.get('/api/flights/club/' + club).success(function() {
+          console.log('success retrieving flights');
+        }).error(function(){
+          console.log('getFlightsByClub error retrieving flights for - ', club);
+        });
+        return promise;
+      },
+
+      getFlightsByType: function (type) {
+        console.log("type: ", type);
+        var promise = $http.get('/api/flights/type/' + type).success(function() {
+          console.log('success retrieving flights');
+        }).error(function(){
+          console.log('getFlightsByType error retrieving flights for - ', type);
+        });
+        return promise;
+      },
+
+      getFlightsBySite: function (site) {
+        console.log("site: ", site);
+        var promise = $http.get('/api/flights/site/' + site).success(function() {
+          console.log('success retrieving flights');
+        }).error(function(){
+          console.log('getFlightsBySite error retrieving flights for - ', site);
         });
         return promise;
       }

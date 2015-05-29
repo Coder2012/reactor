@@ -12,19 +12,66 @@ angular.module('reactorApp')
     // });
 
     FlightService.getPilots().then(function(response){
-      $scope.pilots = response.data;
+      // console.log("response: ", response.data);
+      $scope.pilots = response.data.sort();
+    });
+
+    FlightService.getClubs().then(function(response){
+      // console.log("response: ", response.data);
+      $scope.clubs = response.data.sort();
+    });
+
+    FlightService.getTypes().then(function(response){
+      // console.log("response: ", response.data);
+      $scope.types = response.data.sort();
+    });
+
+    FlightService.getSites().then(function(response){
+      // console.log("response: ", response.data);
+      $scope.sites = response.data.sort();
     });
 
     $scope.getFlightsByPilot = function(pilot){
       console.log('pilot: ', pilot);
     };
 
-    $scope.updateResults = function(pilot){
+    $scope.updateResultsByPilot = function(pilot){
       FlightService.getFlightsByPilot(pilot).then(function(response){
         _.forEach(response.data, function(item){
           var d = item.date;
           item.date = moment(Number(d)).format('Do MMMM YYYY');
         });
+        $scope.flights = response.data;
+      });
+    };
+
+    $scope.updateResultsByClub = function(club){
+      FlightService.getFlightsByClub(club).then(function(response){
+        _.forEach(response.data, function(item){
+          var d = item.date;
+          item.date = moment(Number(d)).format('Do MMMM YYYY');
+        });
+        $scope.flights = response.data;
+      });
+    };
+
+    $scope.updateResultsByType = function(type){
+      FlightService.getFlightsByType(type).then(function(response){
+        _.forEach(response.data, function(item){
+          var d = item.date;
+          item.date = moment(Number(d)).format('Do MMMM YYYY');
+        });
+        $scope.flights = response.data;
+      });
+    };
+
+    $scope.updateResultsBySite = function(site){
+      FlightService.getFlightsBySite(site).then(function(response){
+        _.forEach(response.data, function(item){
+          var d = item.date;
+          item.date = moment(Number(d)).format('Do MMMM YYYY');
+        });
+        console.log("data: ", response.data.length);
         $scope.flights = response.data;
       });
     };

@@ -33,6 +33,20 @@ exports.getClubs = function(req, res) {
   });
 };
 
+exports.getTypes = function(req, res) {
+  Flight.distinct('title', {}, function (err, flights) {
+    if(err) { return handleError(res, err); }
+    return res.json(200, flights);
+  });
+};
+
+exports.getSites = function(req, res) {
+  Flight.distinct('takeoff', {}, function (err, flights) {
+    if(err) { return handleError(res, err); }
+    return res.json(200, flights);
+  });
+};
+
 exports.show = function(req, res) {
   console.log("show");
   Flight.findById(req.params.id, function (err, flight) {
@@ -52,6 +66,22 @@ exports.findByPilot = function(req, res) {
 
 exports.findByClub = function(req, res) {
   Flight.find({club: req.params.club}, function (err, flight) {
+    if(err) { return handleError(res, err); }
+    if(!flight) { return res.send(404); }
+    return res.json(flight);
+  });
+};
+
+exports.findByType = function(req, res) {
+  Flight.find({title: req.params.type}, function (err, flight) {
+    if(err) { return handleError(res, err); }
+    if(!flight) { return res.send(404); }
+    return res.json(flight);
+  });
+};
+
+exports.findBySite = function(req, res) {
+  Flight.find({takeoff: req.params.site}, function (err, flight) {
     if(err) { return handleError(res, err); }
     if(!flight) { return res.send(404); }
     return res.json(flight);
@@ -86,14 +116,6 @@ exports.findByFinish = function(req, res) {
 
 exports.findByDuration = function(req, res) {
   Flight.find({duration: req.params.duration}, function (err, flight) {
-    if(err) { return handleError(res, err); }
-    if(!flight) { return res.send(404); }
-    return res.json(flight);
-  });
-};
-
-exports.findByTakeoff = function(req, res) {
-  Flight.find({takeoff: req.params.takeoff}, function (err, flight) {
     if(err) { return handleError(res, err); }
     if(!flight) { return res.send(404); }
     return res.json(flight);
