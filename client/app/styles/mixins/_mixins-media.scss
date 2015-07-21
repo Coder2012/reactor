@@ -1,0 +1,48 @@
+// Mixins - Media
+// -------------------------
+
+// Breakpoints
+// -------------------------
+
+@function get-breakpoint-width($width) {
+	@if type-of($width) != "number" {
+		@return map-get($breakpoints, $width);
+	}
+
+	@return $width;
+}
+
+@mixin respond-to-min($width) {
+
+	$width: get-breakpoint-width($width);
+	@media only screen and (min-width: rem($width))  { @content; }
+}
+
+@mixin respond-to-max($width) {
+
+	$width: get-breakpoint-width($width);
+	@media only screen and (max-width: rem($width) - 0.0625rem)  { @content; }
+}
+
+@mixin respond-to-min-max($min-width, $max-width) {
+
+	$min-width: get-breakpoint-width($min-width);
+	$max-width: get-breakpoint-width($max-width);
+
+	@media only screen and (min-width: rem($min-width)) and (max-width: rem($max-width))   { @content; }
+}
+
+// Resolution Detection
+// -------------------------
+
+@mixin respond-to-res($dp: 2, $res:192dppx) {
+  @media (-webkit-min-device-pixel-ratio: $dp), (min-resolution: $res) { @content; }
+}
+
+
+// Orientation Detection
+// -------------------------
+
+@mixin respond-to-orientation($orientation) {
+  @media (orientation: $orientation) { @content; }
+}

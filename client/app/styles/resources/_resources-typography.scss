@@ -1,0 +1,25 @@
+// Resources - Typography
+// -------------------------
+
+// @each $font in map-keys($fonts) {
+// 	$map: map-get($fonts, $font);
+// 	$file: map-get($map, file);
+// 	$weight: map-get($map, weight);
+	
+// 	@font-face {
+// 		font-family: $font;
+// 		src: url($helper-fonts-path + $file + '.eot');
+// 		src: url($helper-fonts-path + $file + '.eot?#iefix') format('embedded-opentype'),
+// 			url($helper-fonts-path + $file + '.woff') format('woff'),
+// 			url($helper-fonts-path + $file + '.ttf') format('truetype'),
+// 			url($helper-fonts-path + $file + '#' + $font) format('svg');
+// 		font-weight: $weight;
+// 		font-style: normal;
+// 	}
+// }
+
+@each $type in map-keys($type-sizing) {
+	%text--#{$type}, .text--#{$type} {
+		@include responsive-type-size($type);
+	}
+}

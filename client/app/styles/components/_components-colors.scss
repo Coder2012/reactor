@@ -1,0 +1,19 @@
+.swatch-black-green::after {
+	@include swatch-gradient(#000, #4fb33b);
+}
+
+.swatch-yellow-black::after {
+	@include swatch-gradient(#fff100, #000);
+}
+
+.swatch-black::after {
+	background: #000;
+}
+
+.swatch-orange::after {
+	background: #ff7727;
+}
+
+.swatch-red::after {
+	background: #d71729;
+}

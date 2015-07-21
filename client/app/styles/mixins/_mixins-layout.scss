@@ -1,0 +1,22 @@
+// Mixins - Layout
+// -------------------------
+
+// Use default color, param supplied as it can be useful for debugging
+@mixin border($position:all, $color: map-get($light, type__5)) {
+	$border: 1px solid $color;
+	@if $position == top {
+		border-top: $border;
+	}
+	@else if $position == right {
+		border-right: $border;
+	}
+	@else if $position == bottom {
+		border-bottom: $border;
+	}	
+	@else if $position == left {
+		border-left: $border;
+	}
+	@else {
+		border: $border;
+	}
+}

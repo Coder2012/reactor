@@ -1,0 +1,50 @@
+// Settings - Colours
+// -------------------------
+$trek-brand-color: #CE1A2B;
+$background: #f7f7f7;
+$white: #ffffff;
+$mid: #8f8f8f;
+$panel-background: $white;
+$base: #292929;
+$debug: #00abed;
+
+// Foundation Global overrides
+$body-font-color: $base;
+
+// Color Maps
+// -------------------------
+$brand: (
+	base: $trek-brand-color,
+	light: lighten($trek-brand-color, 10%),
+	dark: darken($trek-brand-color, 10%),
+);
+
+$dark: (
+	base: $base,
+	light__5: lighten($base, 5%),
+	light__10: lighten($base, 10%),
+	light__20: lighten($base, 20%),
+	light__40: lighten($base, 40%),
+	light__50: lighten($base, 50%),
+	light__60: lighten($base, 60%),
+	light__75: lighten($base, 75%) 
+);
+
+$light: (
+	base: $background,
+	type__5: darken($background, 5%), //eaeaea
+	type__10: darken($background, 10%),
+	type__20: darken($background, 20%),
+	type__40: darken($background, 40%),
+	type__60: darken($background, 60%)
+);
+
+$social: (
+    facebook: #3b5998,
+    instagram: #517fa4,
+    linkedin: #007bb6,
+    pinterest: #cb2027,
+    twitter: #00aced,
+    vimeo: #aad450,
+    youtube: #b00
+);

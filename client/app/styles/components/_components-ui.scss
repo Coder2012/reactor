@@ -1,0 +1,11 @@
+// Components - UI
+// -------------------------
+
+.filters {
+	overflow: hidden;
+	border: 5px solid green;
+
+	&__select {
+		color: $base;
+	}
+}

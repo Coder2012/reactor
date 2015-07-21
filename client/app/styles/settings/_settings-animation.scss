@@ -1,0 +1,9 @@
+// Easing 
+// -------------------------
+
+$quintic-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+$quintic-ease-in-out: cubic-bezier(0.860, 0.000, 0.070, 1.000);
+$cubic-ease-out: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+$cubic-ease-in-out: cubic-bezier(0.645, 0.045, 0.355, 1.000);
+$easing: cubic-bezier(.55, 0, .1, 1);
+$duration: 0.15s;

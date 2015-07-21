@@ -1,0 +1,12 @@
+// Helpers
+// -------------------------
+
+%flex-image {
+  max-width: 100%;
+  width: 100%;
+}
+
+%hidden {
+  position: absolute;
+  left: -9999px;
+}

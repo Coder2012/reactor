@@ -1,0 +1,16 @@
+// Settings - Breakpoints
+// -------------------------
+
+$small-breakpoint: 480px;
+$medium-breakpoint: 600px;
+$large-breakpoint: 960px;
+$xlarge-breakpoint:  1024px;
+$xxlarge-breakpoint: 1280px;
+
+$breakpoints: (
+	small: $small-breakpoint,
+	medium: $medium-breakpoint,
+	large: $large-breakpoint,
+	xlarge: $xlarge-breakpoint,
+	xxlarge: $xxlarge-breakpoint
+);

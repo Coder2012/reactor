@@ -1,29 +1,15 @@
-
 $fa-font-path: "/bower_components/font-awesome/fonts";
 
 @import 'font-awesome/scss/font-awesome';
 
-/**
- * App-wide Styles
- */
-
-.browsehappy {
-    margin: 0.2em 0;
-    background: #f0f;
-    color: #008;
-    padding: 0.2em 0;
-}
-
-/* Responsive: Portrait tablets and up */
-@media screen and (min-width: 768px) {
-    .container {
-        max-width: 730px;
-    }
-}
-
 // Component styles are injected through grunt
 // injector
-@import '_csswizardry-grids.scss';
-@import '_fonts.scss';
+@import 'styles/_normalize.scss';
+@import 'styles/_fonts.scss';
+@import 'styles/settings/_settings.scss';
+@import 'styles/mixins/_mixins.scss';
+@import 'styles/foundation/_grid.scss';
+@import 'styles/resources/_resources.scss';
+@import 'styles/components/_components.scss';
 @import 'main/main.scss';
 // endinjector

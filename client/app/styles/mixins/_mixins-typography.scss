@@ -1,0 +1,112 @@
+// Mixins - Typography
+// -------------------------
+
+@function get-type-breakpoints($type-size) {
+	@return map-get($type-sizing, $type-size);
+}
+
+@function get-type-props($type-size, $breakpoint-name) {
+	$type-breakpoints: get-type-breakpoints($type-size);
+	@return map-get($type-breakpoints, $breakpoint-name);
+}
+
+@mixin type-size($type-size, $breakpoint-name: "small") {
+	$type-size-props: get-type-props($type-size, $breakpoint-name);
+
+	@if $type-size-props != null {
+		font-size: rem(map-get($type-size-props, "font-size"));
+		line-height: map-get($type-size-props, "line-height");
+	} @else {
+		@warn "Breakpoint '#{$breakpoint-name}' for type size '#{$type-size}' is not defined";
+	}
+}
+
+@mixin responsive-type-size($type-size, $default-breakpoint: "small") {
+	@include type-size($type-size, $default-breakpoint);
+
+	$type-breakpoints-map: get-type-breakpoints($type-size);
+	$type-breakpoints-keys: map-keys($type-breakpoints-map);
+
+	@each $breakpoint-name in $type-breakpoints-keys {
+		@if $breakpoint-name != $default-breakpoint and breakpoint($breakpoint-name) != null {
+			@include respond-to-min(map-get($breakpoints, $breakpoint-name)) {
+				@include type-size($type-size, $breakpoint-name);
+			}
+		}
+	}
+}
+
+@mixin hide-text {
+	font: 0/0 a;
+	color: transparent;
+	text-shadow: none;
+	background-color: transparent;
+	border: 0;
+}
+
+@mixin icon($font-family, $icon-map, $name, $position:before) {
+	$val: map-get($icon-map, $name);
+
+	@if $position == before {
+		&:before {
+			@extend %icon;
+			content: $val;
+			font-family: $font-family;
+			@content;
+		}
+	}
+	@else {
+		&:after {
+			@extend %icon;
+			content: $val;
+			font-family: $font-family;
+			@content;
+		}
+	}
+}
+
+@mixin social-icon($name, $position:before) {
+	@include icon($font-social-icons, $social-icons, $name, $position);
+	color: map-get($light, base);
+	text-decoration: inherit;
+	strong {
+		font-size: 0;
+	}
+}
+
+@mixin ss-standard-icon($name, $position:before) {
+	@include icon($font-ss-standard-icons, $ss-standard-icons, $name, $position);
+}
+
+@mixin icomoon-icon($name, $position:before) {
+	@include icon($font-icomoon-icons, $icomoon-icons, $name, $position);
+}
+
+@mixin rule($height: rem(2px), $width: 30%, $color: map-get($dark, base)) {
+	border: none;
+	height: $height * 2; 
+	margin: $half-spacing 0;
+	@include respond-to-min(large) {
+		height: $height;
+	}
+	&:after {
+		background-color: $color;
+		content: "";
+		display: block;
+		width: $width;
+		height: inherit;
+	}	
+}
+
+@mixin puny($position: before, $opacity: 0.5) {
+	@if $position == before {
+		&:before {
+			opacity: $opacity;
+		}
+	}
+	@else {
+		&:after {
+			opacity: $opacity;
+		}
+	}	
+}

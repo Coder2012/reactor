@@ -1,0 +1,19 @@
+// Components - Layout
+// -------------------------
+
+* {
+	box-sizing: border-box;
+}
+
+// Some custom normalize stuff
+ul, ol {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+fieldset {
+	border: 0;
+	margin: 0;
+	padding: 0;
+}

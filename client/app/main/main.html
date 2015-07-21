@@ -8,54 +8,81 @@
   </div>
 </header>
 
-<div class="container">
-  <div class="row">
-    <div class="col-lg-12">
-      <select name="pilots" id="pilots" ng-model="selectedPilot" ng-options="p for p in pilots"></select>
-      <button id="update" ng-click="updateResultsByPilot(selectedPilot);">Update</button>
+
+<div class="row">
+  <form class="filters">
+    <div class="small-12 medium-3 columns">
+      <div class="filters__select">
+        <select class="filters__select header-small" name="pilots" id="pilots" ng-model="selectedPilot" ng-change="updateResultsByPilot(selectedPilot);" ng-options="p for p in pilots">
+          <option value="">Select a pilot</option>
+        </select>
+      </div>
     </div>
-    <div class="col-lg-12">
-      <select name="club" id="club" ng-model="selectedClub" ng-options="p for p in clubs"></select>
-      <button id="update" ng-click="updateResultsByClub(selectedClub);">Update</button>
+    <div class="small-12 medium-3 columns">
+      <div class="filters__select">
+        <select class="filters__select header-small" name="club" id="club" ng-model="selectedClub" ng-change="updateResultsByClub(selectedClub);" ng-options="p for p in clubs">
+          <option value="">Select a club</option>
+        </select>
+      </div>
     </div>
-    <div class="col-lg-12">
-      <select name="type" id="type" ng-model="selectedType" ng-options="p for p in types"></select>
-      <button id="update" ng-click="updateResultsByType(selectedType);">Update</button>
+    <div class="small-12 medium-3 columns">
+      <div class="filters__select">
+        <select class="filters__select header-small" name="type" id="type" ng-model="selectedType" ng-change="updateResultsByType(selectedType);" ng-options="p for p in types">
+          <option value="">Select a flight type</option>
+        </select>
+      </div>
     </div>
-    <div class="col-lg-12">
-      <select name="site" id="site" ng-model="selectedSite" ng-options="p for p in sites"></select>
-      <button id="update" ng-click="updateResultsBySite(selectedSite);">Update</button>
+    <div class="small-12 medium-3 columns">
+      <div class="filters__select">
+        <select class="filters__select header-small" name="site" id="site" ng-model="selectedSite" ng-change="updateResultsBySite(selectedSite);" ng-options="p for p in sites">
+          <option value="">Select a site</option>
+        </select>
+      </div>
     </div>
-  </div>
+  </form>
 </div>
 
-<div class="grid">
-  <div class="grid__item" ng-repeat="flight in flights">
-    <div class="flight">
-      <h2 class="heading-large flight__pilot"><span class="flight__index" ng-class="{double: ($index > 8 && $index <= 98 ), triple: ($index > 98)}" data-index="{{$index + 1}}"></span>{{flight.pilot}}</h2>
+<div class="row" ng-repeat="flight in flights">
+  <div class="flight">
+    <header class="flight__header">
+      <span class="flight__index header-large" ng-class="{double: ($index > 8 && $index <= 98 ), triple: ($index > 98)}" data-index="{{$index + 1}}">{{$index+1}}</span>
+      <h2 class="header-large flight__pilot">
+        {{flight.pilot}}
+      </h2>
       <h3 class="heading-medium flight__title">{{flight.title}}</h3>
-      <span>{{flight.club}}</span>
-      <span>{{flight.glider}}</span>
-      <span class="fa fa-calendar">{{flight.date}}</span>
-      <div class="fa fa-clock-o">
-        <span class="">{{flight.start}}</span>
-        <span class="">{{flight.finish}}</span>
-      </div>
-      <span>{{flight.duration}}</span>
-      <span class="fa fa-map-marker">{{flight.takeoff}}</span>
-      <span class="fa fa-map-marker">{{flight.landing}}</span>
-      <span>{{flight.total}}</span>
-      <span>{{flight.multiplier}}</span>
-      <span>{{flight.score}}</span>
-      <span>{{flight.maxHeight}}</span>
-      <span>{{flight.lowHeight}}</span>
-      <span>{{flight.takeoffHeight}}</span>
-      <span>{{flight.maxClimb}}</span>
-      <span>{{flight.minClimb}}</span>
-      <span>{{flight.maxSpeed}}</span>
-      <span>{{flight.avgSpeedCourse}}</span>
-      <span>{{flight.avgSpeedTrack}}</span>
+    </header>
+    <div class="flight__details">
+      <div class="flight__details-text text-small">Club: <span class="text-small--highlight">{{flight.club}}</span></div>
+      <div class="flight__details-text text-small">Glider: <span class="text-small--highlight">{{flight.glider}}</span></div>
     </div>
+    <div class="flight__chronology">
+      <div class="flight__chronology-calendar fa fa-calendar">
+        <span class="text-small">{{flight.date}}<span>
+      </div>
+      <div class="text-small">
+        <span class="flight__chronology-start fa fa-clock-o">
+          <span class=" text-small">{{flight.start}}</span>
+        </span>
+        -
+        <span class="flight__chronology-finish fa fa-clock-o">
+          <span class="text-small">{{flight.finish}}</span>
+        </span>
+      </div>
+      <div class="text-small">{{flight.duration}}</div>
+    </div>
+    <span class="fa fa-map-marker">{{flight.takeoff}}</span>
+    <span class="fa fa-map-marker">{{flight.landing}}</span>
+    <span>{{flight.total}}</span>
+    <span>{{flight.multiplier}}</span>
+    <span>{{flight.score}}</span>
+    <span>{{flight.maxHeight}}</span>
+    <span>{{flight.lowHeight}}</span>
+    <span>{{flight.takeoffHeight}}</span>
+    <span>{{flight.maxClimb}}</span>
+    <span>{{flight.minClimb}}</span>
+    <span>{{flight.maxSpeed}}</span>
+    <span>{{flight.avgSpeedCourse}}</span>
+    <span>{{flight.avgSpeedTrack}}</span>
   </div>
 </div>
 
