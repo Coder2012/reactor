@@ -36,7 +36,7 @@ server.listen(config.port, config.ip, function () {
 
 //--------------------------------------------------
 
-var m = require('./model');
+var m = require('./api/flight/flight.model');
 var FlightModel = m.flights
 var schema = m.schema;
 var Scraper = require('./scraper');
