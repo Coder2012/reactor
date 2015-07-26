@@ -36,7 +36,7 @@ server.listen(config.port, config.ip, function () {
 
 //--------------------------------------------------
 
-var m = require('./api/flight/flight.model');
+var m = require('./model');
 var FlightModel = m.flights
 var schema = m.schema;
 var Scraper = require('./scraper');
@@ -47,6 +47,7 @@ var flightUrls = [];
 schema.pre('save', function(next){
   var id = this.pilot + this.start + this.finish;
   this._id = id.replace(/ /g, '');
+  console.log(this._id);
 
     FlightModel.find({_id : this._id}, function (err, docs) {
         if (!docs.length){
