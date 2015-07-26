@@ -4,7 +4,7 @@
 
 'use strict';
 
-var Flight = require('./flight.model');
+var Flight = require('./flight.model').flights;
 
 exports.register = function(socket) {
   Flight.schema.post('save', function (doc) {

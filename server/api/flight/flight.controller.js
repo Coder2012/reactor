@@ -1,7 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
-var Flight = require('./flight.model');
+var Flight = require('./flight.model').flights;
 //var moment = require('')
 
 exports.index = function(req, res) {

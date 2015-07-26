@@ -8,5 +8,5 @@ module.exports = {
     uri: 'mongodb://localhost/reactor'
   },
 
-  seedDB: true
+  seedDB: false
 };
