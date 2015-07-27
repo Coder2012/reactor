@@ -44,46 +44,54 @@
 
 <div class="row" ng-repeat="flight in flights">
   <div class="flight">
-    <header class="flight__header">
-      <span class="flight__index header-large" ng-class="{double: ($index > 8 && $index <= 98 ), triple: ($index > 98)}" data-index="{{$index + 1}}">{{$index+1}}</span>
-      <h2 class="header-large flight__pilot">
-        {{flight.pilot}}
-      </h2>
-      <h3 class="heading-medium flight__title">{{flight.title}}</h3>
-    </header>
-    <div class="flight__details">
-      <div class="flight__details-text text-small">Club: <span class="text-small--highlight">{{flight.club}}</span></div>
-      <div class="flight__details-text text-small">Glider: <span class="text-small--highlight">{{flight.glider}}</span></div>
-    </div>
-    <div class="flight__chronology">
-      <div class="flight__chronology-calendar fa fa-calendar">
-        <span class="text-small">{{flight.date}}<span>
+    <div class="flight__inner">
+      <header class="flight__header">
+        <span class="flight__index header-large" ng-class="{double: ($index > 8 && $index <= 98 ), triple: ($index > 98)}" data-index="{{$index + 1}}">{{$index+1}}</span>
+        <h2 class="header-large flight__pilot">
+          {{flight.pilot}}
+        </h2>
+        <h3 class="heading-medium flight__title">{{flight.title}}</h3>
+      </header>
+      <div class="flight__details">
+        <div class="flight__details-text text-small">Club: <span class="text-small--highlight">{{flight.club}}</span></div>
+        <div class="flight__details-text text-small">Glider: <span class="text-small--highlight">{{flight.glider}}</span></div>
       </div>
-      <div class="text-small">
-        <span class="flight__chronology-start fa fa-clock-o">
-          <span class=" text-small">{{flight.start}}</span>
-        </span>
-        -
-        <span class="flight__chronology-finish fa fa-clock-o">
-          <span class="text-small">{{flight.finish}}</span>
-        </span>
+      <div class="flight__chronology vertical-spacer">
+        <div class="flight__chronology-calendar fa fa-calendar">
+          <span class="text-small">{{flight.date}}<span>
+        </div>
+        <div class="text-small">
+          <span class="flight__chronology-start fa fa-clock-o">
+            <span class=" text-small">{{flight.start}}</span>
+          </span>
+          -
+          <span class="flight__chronology-finish fa fa-clock-o">
+            <span class="text-small">{{flight.finish}}</span>
+          </span>
+        </div>
+        <div class="text-small">{{flight.duration}}</div>
       </div>
-      <div class="text-small">{{flight.duration}}</div>
-    </div>
-    <span class="fa fa-map-marker">{{flight.takeoff}}</span>
-    <span class="fa fa-map-marker">{{flight.landing}}</span>
-    <span>{{flight.total}}</span>
-    <span>{{flight.multiplier}}</span>
-    <span>{{flight.score}}</span>
-    <span>{{flight.maxHeight}}</span>
-    <span>{{flight.lowHeight}}</span>
-    <span>{{flight.takeoffHeight}}</span>
-    <span>{{flight.maxClimb}}</span>
-    <span>{{flight.minClimb}}</span>
-    <span>{{flight.maxSpeed}}</span>
-    <span>{{flight.avgSpeedCourse}}</span>
-    <span>{{flight.avgSpeedTrack}}</span>
-  </div>
+      <div class="flight__location vertical-spacer">
+        <span class="flight__location-takeoff fa fa-map-marker"><span class="text-small">{{flight.takeoff}}</span></span>
+        <span class="flight__location-landing fa fa-map-marker"><span class="text-small">{{flight.landing}}</span></span>
+      </div>
+      <div class="totals text-small vertical-spacer">
+        <div>Distance: {{flight.total}}</div>
+        <div>Score: {{flight.score}}</div>
+        <div ng-if="flight.multiplier != undefined">Multiplier: {{flight.multiplier}}</div>
+      </div>
+      <div class="stats text-small vertical-spacer">
+        <div ng-if="flight.maxHeight != undefined">Max Height: {{flight.maxHeight}}</div>
+        <div ng-if="flight.lowHeight != undefined">Low Height: {{flight.lowHeight}}</div>
+        <div ng-if="flight.takeoffHeight != undefined">Takeoff Height: {{flight.takeoffHeight}}</div>
+        <div ng-if="flight.maxClimb != undefined">Max Climb: {{flight.maxClimb}}</div>
+        <div ng-if="flight.minClimb != undefined">Min Climb: {{flight.minClimb}}</div>
+        <div ng-if="flight.maxSpeed != undefined">Max Speed: {{flight.maxSpeed}}</div>
+        <div ng-if="flight.avgSpeedCourse != undefined">Avg Speed Course: {{flight.avgSpeedCourse}}</div>
+        <div ng-if="flight.avgSpeedTrack != undefined">Avg Speed Track: {{flight.avgSpeedTrack}}</div>
+      </div>
+    </div>  
+  </div>  
 </div>
 
 <div class="container">

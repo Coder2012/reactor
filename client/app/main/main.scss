@@ -49,7 +49,11 @@ h1,h2,h3 {
 
 .flight {
     background-color: $panel-background;
-    padding: rem(10px);
+    margin: rem(10px);
+
+    &__inner {
+        padding: rem(10px);
+    }
 
     &__header {
         border-bottom: 1px solid $breaker;
@@ -90,6 +94,22 @@ h1,h2,h3 {
         padding-right: rem(8px);
     }
 
+    &__location {
+        &-takeoff {
+            margin-right: rem(10px);
+        }
+        &-takeoff::before,
+        &-landing::before {
+            margin-right: rem(5px);
+            font-size: rem(25px);
+        }
+        &-takeoff::before {
+            color: green;
+        }
+        &-landing::before {
+            color: red;
+        }
+    }
 
     &__title {
     }
