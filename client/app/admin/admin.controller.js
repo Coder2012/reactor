@@ -10,8 +10,8 @@ angular.module('reactorApp')
       $scope.flightsCount = response.data;
     });
 
-    FlightService.getFlightsCount().then(function(response){
-      $scope.flightsCount = response.data;
+    FlightService.getFlightsByDateCount('31:07:2015').then(function(response){
+      $scope.flightsByDateCount = response.data;
     });
 
     $scope.delete = function(user) {

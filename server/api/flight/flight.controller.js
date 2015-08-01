@@ -195,6 +195,15 @@ exports.getFlightsCount = function(req, res) {
   });
 };
 
+exports.getFlightsByDateCount = function(req, res) {
+  var date = Number(parseDate(req.params.date));
+  Flight.count({date: date}, function (err, flight) {
+    if(err) { return handleError(res, err); }
+    if(!flight) { return res.send(404); }
+    return res.json(flight);
+  });
+};
+
 // Creates a new flight in the DB.
 exports.create = function(req, res) {
   Flight.create(req.body, function(err, flight) {

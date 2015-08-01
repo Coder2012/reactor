@@ -12,6 +12,7 @@ router.get('/clubs', controller.getClubs);
 router.get('/types', controller.getTypes);
 router.get('/sites', controller.getSites);
 router.get('/flightsCount', controller.getFlightsCount);
+router.get('/flightsByDateCount/:date', controller.getFlightsByDateCount);
 
 router.get('/:id', controller.show);
 router.get('/pilot/:pilot', controller.findByPilot);

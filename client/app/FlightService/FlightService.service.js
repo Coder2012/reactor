@@ -89,5 +89,15 @@ angular.module('reactorApp')
         });
         return promise;
       },
+
+      getFlightsByDateCount: function (date) {
+        var promise = $http.get('/api/flights/flightsByDateCount/' + date).success(function() {
+          console.log('success retrieving flights');
+        }).error(function(){
+          console.log('getFlightsCount error retrieving flights count');
+        });
+        return promise;
+      }
+
     };
   });
