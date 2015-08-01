@@ -1,10 +1,18 @@
 'use strict';
 
 angular.module('reactorApp')
-  .controller('AdminCtrl', function ($scope, $http, Auth, User) {
+  .controller('AdminCtrl', function ($scope, $http, Auth, User, FlightService) {
 
     // Use the User $resource to fetch all users
     $scope.users = User.query();
+
+    FlightService.getFlightsCount().then(function(response){
+      $scope.flightsCount = response.data;
+    });
+
+    FlightService.getFlightsCount().then(function(response){
+      $scope.flightsCount = response.data;
+    });
 
     $scope.delete = function(user) {
       User.remove({ id: user._id });

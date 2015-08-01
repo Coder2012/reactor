@@ -96,18 +96,43 @@ exports.findByGlider = function(req, res) {
   });
 };
 
-exports.findByStart = function(req, res) {
-  console.log("between: start ", req.params.start);
-  console.log("between: finish ", req.query.finish);
-  Flight.find({start: {$gte: req.params.start}, finish: {$lte: req.query.finish}}, function (err, flight) {
+exports.findByStartTime = function(req, res) {
+  Flight.find({start: req.params.start}, function (err, flight) {
     if(err) { return handleError(res, err); }
     if(!flight) { return res.send(404); }
     return res.json(flight);
   });
 };
 
-exports.findByFinish = function(req, res) {
+exports.findByFinishTime = function(req, res) {
   Flight.find({finish: req.params.finish}, function (err, flight) {
+    if(err) { return handleError(res, err); }
+    if(!flight) { return res.send(404); }
+    return res.json(flight);
+  });
+};
+
+exports.findByTimeRange = function(req, res) {
+  Flight.find({start: {$gte: req.params.start}, finish: {$lte: req.params.finish}}, function (err, flight) {
+    if(err) { return handleError(res, err); }
+    if(!flight) { return res.send(404); }
+    return res.json(flight);
+  });
+};
+
+exports.findByDate = function(req, res) {
+  var date = Number(parseDate(req.params.date));
+  Flight.find({date: date}, function (err, flight) {
+    if(err) { return handleError(res, err); }
+    if(!flight) { return res.send(404); }
+    return res.json(flight);
+  });
+};
+
+exports.findByDateRange = function(req, res) {
+  var startDate = Number(parseDate(req.params.start));
+  var finishDate = Number(parseDate(req.params.finish));
+  Flight.find({date: {$gte: startDate, $lte: finishDate}}, function (err, flight) {
     if(err) { return handleError(res, err); }
     if(!flight) { return res.send(404); }
     return res.json(flight);
@@ -162,6 +187,14 @@ exports.findByScore = function(req, res) {
   });
 };
 
+exports.getFlightsCount = function(req, res) {
+  Flight.count({}, function (err, flight) {
+    if(err) { return handleError(res, err); }
+    if(!flight) { return res.send(404); }
+    return res.json(flight);
+  });
+};
+
 // Creates a new flight in the DB.
 exports.create = function(req, res) {
   Flight.create(req.body, function(err, flight) {
@@ -198,4 +231,13 @@ exports.destroy = function(req, res) {
 
 function handleError(res, err) {
   return res.send(500, err);
+}
+
+function parseDate(str1){
+  // str1 format should be dd/mm/yyyy. Separator can be anything e.g. / or -. It wont effect
+  var dt1   = parseInt(str1.substring(0,2));
+  var mon1  = parseInt(str1.substring(3,5));
+  var yr1   = parseInt(str1.substring(6,10));
+  var date1 = new Date(yr1, mon1-1, dt1);
+  return date1;
 }

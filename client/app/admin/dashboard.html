@@ -1,0 +1,12 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="container" ng-controller="AdminCtrl">
+	<div class="dashboard__count">
+		<span class="heading-medium">Total Flights</span>
+		<span>{{flightsCount}}</span>
+	</div>
+	<div class="dashboard__today">
+		<span class="heading-medium">Flights added today</span>
+		<span>{{flightsToday}}</span>
+	</div>
+</div>

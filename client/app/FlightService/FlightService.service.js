@@ -79,6 +79,15 @@ angular.module('reactorApp')
           console.log('getFlightsBySite error retrieving flights for - ', site);
         });
         return promise;
-      }
+      },
+
+      getFlightsCount: function () {
+        var promise = $http.get('/api/flights/flightsCount').success(function() {
+          console.log('success retrieving flights');
+        }).error(function(){
+          console.log('getFlightsCount error retrieving flights count');
+        });
+        return promise;
+      },
     };
   });
