@@ -28,6 +28,8 @@ $light-background: #303030;
 $light-text: #cecece;
 $medium-text: #ababab;
 $breaker: #333;
+$start-color: #2dd82d;
+$finish-color: #ff3939;
 
 .footer {
     text-align: center;
@@ -79,10 +81,10 @@ h1,h2,h3 {
             }
         }
         &-start {
-            color: green;
+            color: $start-color;
         }
         &-finish {
-            color: red;
+            color: $finish-color;
         }
     }
 
@@ -104,10 +106,10 @@ h1,h2,h3 {
             font-size: rem(25px);
         }
         &-takeoff::before {
-            color: green;
+            color: $start-color;
         }
         &-landing::before {
-            color: red;
+            color: $finish-color;
         }
     }
 

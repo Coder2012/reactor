@@ -32,6 +32,9 @@ body {
 	font-family: $font-body-regular;
 	font-weight: bold;
 	&--highlight {
-		color: lightgreen;
+		color: lightblue;
+	}
+	&--darken {
+		color: darken(#fff, 20%)
 	}
 }

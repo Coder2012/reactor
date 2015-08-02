@@ -16,7 +16,9 @@ router.get('/flightsByDateCount/:date', controller.getFlightsByDateCount);
 
 router.get('/:id', controller.show);
 router.get('/pilot/:pilot', controller.findByPilot);
+router.get('/pilot/:pilot/:page/:limit', controller.findByPilot);
 router.get('/club/:club', controller.findByClub);
+router.get('/club/:club/:page/:limit', controller.findByClub);
 router.get('/type/:type', controller.findByType);
 router.get('/site/:site', controller.findBySite);
 router.get('/glider/:glider', controller.findByGlider);

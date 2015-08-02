@@ -57,7 +57,11 @@ exports.show = function(req, res) {
 };
 
 exports.findByPilot = function(req, res) {
-  Flight.find({pilot: req.params.pilot}).sort('-score').exec(function (err, flight) {
+  var limit = Number(req.params.limit);
+  var page = Number(req.params.page);
+
+  Flight.find({pilot: req.params.pilot}).sort('-date').skip((page-1)*limit)
+  .limit(limit).exec(function (err, flight) {
     if(err) { return handleError(res, err); }
     if(!flight) { return res.send(404); }
     return res.json(flight);
@@ -65,7 +69,11 @@ exports.findByPilot = function(req, res) {
 };
 
 exports.findByClub = function(req, res) {
-  Flight.find({club: req.params.club}, function (err, flight) {
+  var limit = Number(req.params.limit);
+  var page = Number(req.params.page);
+  
+  Flight.find({club: req.params.club}).sort('-date').skip((page-1)*limit)
+  .limit(limit).exec(function (err, flight) {
     if(err) { return handleError(res, err); }
     if(!flight) { return res.send(404); }
     return res.json(flight);

@@ -1,28 +1,21 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
-<header class="hero-unit" id="banner">
-  <div class="container">
-    <h1>'Allo, 'Allo! XXX</h1>
-    <p class="lead">Kick-start your next web app with Angular Fullstack</p>
-    <img src="assets/images/yeoman.png" alt="I'm Yeoman">
-  </div>
-</header>
-
-
 <div class="row">
   <form class="filters">
     <div class="small-12 medium-3 columns">
       <div class="filters__select">
-        <select class="filters__select header-small" name="pilots" id="pilots" ng-model="selectedPilot" ng-change="updateResultsByPilot(selectedPilot);" ng-options="p for p in pilots">
+        <select class="filters__select header-small" name="pilots" id="pilots" ng-model="selectedPilot" ng-options="p for p in pilots">
           <option value="">Select a pilot</option>
         </select>
+        <button class="text-small" ng-click="reset();updateResultsByPilot(selectedPilot, page, selectedLimit);">Search</button>
       </div>
     </div>
     <div class="small-12 medium-3 columns">
       <div class="filters__select">
-        <select class="filters__select header-small" name="club" id="club" ng-model="selectedClub" ng-change="updateResultsByClub(selectedClub);" ng-options="p for p in clubs">
+        <select class="filters__select header-small" name="club" id="club" ng-model="selectedClub" ng-options="p for p in clubs">
           <option value="">Select a club</option>
         </select>
+        <button class="text-small" ng-click="reset();updateResultsByClub(selectedClub, page, selectedLimit);">Search</button>
       </div>
     </div>
     <div class="small-12 medium-3 columns">
@@ -39,6 +32,13 @@
         </select>
       </div>
     </div>
+    <select name="limit" id="limit" class="header-small" ng-model="selectedLimit">
+      <option value="5">5</option>
+      <option value="10">10</option>
+      <option value="25">25</option>
+      <option value="50">50</option>
+      <option value="all">ALL</option>
+    </select>
   </form>
 </div>
 
@@ -46,7 +46,7 @@
   <div class="flight">
     <div class="flight__inner">
       <header class="flight__header">
-        <span class="flight__index header-large" ng-class="{double: ($index > 8 && $index <= 98 ), triple: ($index > 98)}" data-index="{{$index + 1}}">{{$index+1}}</span>
+        <span class="flight__index header-large" ng-class="{double: ($index > 8 && $index <= 98 ), triple: ($index > 98)}" data-index="{{flight.count}}">{{flight.count}}</span>
         <h2 class="header-large flight__pilot">
           {{flight.pilot}}
         </h2>
@@ -76,19 +76,19 @@
         <span class="flight__location-landing fa fa-map-marker"><span class="text-small">{{flight.landing}}</span></span>
       </div>
       <div class="totals text-small vertical-spacer">
-        <div>Distance: {{flight.total}}</div>
-        <div>Score: {{flight.score}}</div>
-        <div ng-if="flight.multiplier != undefined">Multiplier: {{flight.multiplier}}</div>
+        <div><span class="text-small--darken">Distance:</span> {{flight.total}}</div>
+        <div><span class="text-small--darken">Score:</span> {{flight.score}}</div>
+        <div ng-if="flight.multiplier != undefined"><span class="text-small--darken">Multiplier:</span> {{flight.multiplier}}</div>
       </div>
       <div class="stats text-small vertical-spacer">
-        <div ng-if="flight.maxHeight != undefined">Max Height: {{flight.maxHeight}}</div>
-        <div ng-if="flight.lowHeight != undefined">Low Height: {{flight.lowHeight}}</div>
-        <div ng-if="flight.takeoffHeight != undefined">Takeoff Height: {{flight.takeoffHeight}}</div>
-        <div ng-if="flight.maxClimb != undefined">Max Climb: {{flight.maxClimb}}</div>
-        <div ng-if="flight.minClimb != undefined">Min Climb: {{flight.minClimb}}</div>
-        <div ng-if="flight.maxSpeed != undefined">Max Speed: {{flight.maxSpeed}}</div>
-        <div ng-if="flight.avgSpeedCourse != undefined">Avg Speed Course: {{flight.avgSpeedCourse}}</div>
-        <div ng-if="flight.avgSpeedTrack != undefined">Avg Speed Track: {{flight.avgSpeedTrack}}</div>
+        <div ng-if="flight.maxHeight != undefined"><span class="text-small--darken">Max Height:</span> {{flight.maxHeight}}</div>
+        <div ng-if="flight.lowHeight != undefined"><span class="text-small--darken">Low Height:</span> {{flight.lowHeight}}</div>
+        <div ng-if="flight.takeoffHeight != undefined"><span class="text-small--darken">Takeoff Height:</span> {{flight.takeoffHeight}}</div>
+        <div ng-if="flight.maxClimb != undefined"><span class="text-small--darken">Max Climb:</span> {{flight.maxClimb}}</div>
+        <div ng-if="flight.minClimb != undefined"><span class="text-small--darken">Min Climb:</span> {{flight.minClimb}}</div>
+        <div ng-if="flight.maxSpeed != undefined"><span class="text-small--darken">Max Speed:</span> {{flight.maxSpeed}}</div>
+        <div ng-if="flight.avgSpeedCourse != undefined"><span class="text-small--darken">Avg Speed Course:</span> {{flight.avgSpeedCourse}}</div>
+        <div ng-if="flight.avgSpeedTrack != undefined"><span class="text-small--darken">Avg Speed Track:</span> {{flight.avgSpeedTrack}}</div>
       </div>
     </div>  
   </div>  
@@ -96,23 +96,8 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-lg-12">
-      <h1 class="page-header">Features:</h1>
-      <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="thing in awesomeThings">
-        <li><a href="#" tooltip="{{thing.info}}">{{thing.name}}<button type="button" class="close" ng-click="deleteThing(thing)">&times;</button></a></li>
-      </ul>
-    </div>
+    <button class="text-small" ng-click="updateResultsByPilotNext();">SHOW MORE</button>
   </div>
-
-  <form class="thing-form">
-    <label>Syncs in realtime across clients</label>
-    <p class="input-group">
-      <input type="text" class="form-control" placeholder="Add a new thing here." ng-model="newThing">
-      <span class="input-group-btn">
-        <button type="submit" class="btn btn-primary" ng-click="addThing()">Add New</button>
-      </span>
-    </p>
-  </form>
 </div>
 
 <footer class="footer">
