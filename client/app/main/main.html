@@ -7,7 +7,7 @@
         <select class="filters__select header-small" name="pilots" id="pilots" ng-model="selectedPilot" ng-options="p for p in pilots">
           <option value="">Select a pilot</option>
         </select>
-        <button class="text-small" ng-click="reset();updateResultsByPilot(selectedPilot, page, selectedLimit);">Search</button>
+        <button class="text-small" ng-click="reset();updateResultsByPilot(selectedPilot);">Search</button>
       </div>
     </div>
     <div class="small-12 medium-3 columns">
@@ -15,7 +15,7 @@
         <select class="filters__select header-small" name="club" id="club" ng-model="selectedClub" ng-options="p for p in clubs">
           <option value="">Select a club</option>
         </select>
-        <button class="text-small" ng-click="reset();updateResultsByClub(selectedClub, page, selectedLimit);">Search</button>
+        <button class="text-small" ng-click="reset();updateResultsByClub(selectedClub);">Search</button>
       </div>
     </div>
     <div class="small-12 medium-3 columns">
@@ -32,21 +32,22 @@
         </select>
       </div>
     </div>
-    <select name="limit" id="limit" class="header-small" ng-model="selectedLimit">
+    <select name="limit" id="limit" class="filters__select header-small" ng-model="selectedLimit">
+      <option value="">Show results</option>
       <option value="5">5</option>
       <option value="10">10</option>
       <option value="25">25</option>
       <option value="50">50</option>
-      <option value="all">ALL</option>
+      <option value="999">ALL</option>
     </select>
   </form>
 </div>
 
-<div class="row" ng-repeat="flight in flights">
+<div class="row" ng-repeat="flight in flights | limitTo: flightsLimitTo">
   <div class="flight">
     <div class="flight__inner">
       <header class="flight__header">
-        <span class="flight__index header-large" ng-class="{double: ($index > 8 && $index <= 98 ), triple: ($index > 98)}" data-index="{{flight.count}}">{{flight.count}}</span>
+        <span class="flight__index header-large" ng-class="{double: ($index > 8 && $index <= 98 ), triple: ($index > 98)}" data-index="{{$index+1}}">{{$index+1}}</span>
         <h2 class="header-large flight__pilot">
           {{flight.pilot}}
         </h2>
@@ -80,23 +81,19 @@
         <div><span class="text-small--darken">Score:</span> {{flight.score}}</div>
         <div ng-if="flight.multiplier != undefined"><span class="text-small--darken">Multiplier:</span> {{flight.multiplier}}</div>
       </div>
-      <div class="stats text-small vertical-spacer">
-        <div ng-if="flight.maxHeight != undefined"><span class="text-small--darken">Max Height:</span> {{flight.maxHeight}}</div>
-        <div ng-if="flight.lowHeight != undefined"><span class="text-small--darken">Low Height:</span> {{flight.lowHeight}}</div>
-        <div ng-if="flight.takeoffHeight != undefined"><span class="text-small--darken">Takeoff Height:</span> {{flight.takeoffHeight}}</div>
-        <div ng-if="flight.maxClimb != undefined"><span class="text-small--darken">Max Climb:</span> {{flight.maxClimb}}</div>
-        <div ng-if="flight.minClimb != undefined"><span class="text-small--darken">Min Climb:</span> {{flight.minClimb}}</div>
-        <div ng-if="flight.maxSpeed != undefined"><span class="text-small--darken">Max Speed:</span> {{flight.maxSpeed}}</div>
-        <div ng-if="flight.avgSpeedCourse != undefined"><span class="text-small--darken">Avg Speed Course:</span> {{flight.avgSpeedCourse}}</div>
-        <div ng-if="flight.avgSpeedTrack != undefined"><span class="text-small--darken">Avg Speed Track:</span> {{flight.avgSpeedTrack}}</div>
+      <div class="stats-container">
+        <button class="secondary-button fa fa-chevron-right" data-show-stats>
+          <span class="text-small">Show stats</span>
+        </button>
+        <div ng-include="'components/fragments/stats.html'"></div>
       </div>
     </div>  
   </div>  
 </div>
 
-<div class="container">
-  <div class="row">
-    <button class="text-small" ng-click="updateResultsByPilotNext();">SHOW MORE</button>
+<div class="row">
+  <div class="show-more small-12">
+    <button class="primary-button text-small" ng-click="showMore();">SHOW MORE</button>
   </div>
 </div>
 

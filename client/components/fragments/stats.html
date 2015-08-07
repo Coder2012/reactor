@@ -1,0 +1,34 @@
+<div class="flight__stats text-small vertical-spacer">
+	<div ng-if="flight.maxHeight != undefined">
+		<span class="text-small--darken">Max Height:</span> 
+		{{flight.maxHeight}}
+	</div>
+	<div ng-if="flight.lowHeight != undefined">
+		<span class="text-small--darken">Low Height:</span> 
+		{{flight.lowHeight}}
+	</div>
+	<div ng-if="flight.takeoffHeight != undefined">
+		<span class="text-small--darken">Takeoff Height:</span> 
+		{{flight.takeoffHeight}}
+	</div>
+	<div ng-if="flight.maxClimb != undefined">
+		<span class="text-small--darken">Max Climb:</span> 
+		{{flight.maxClimb}}
+	</div>
+	<div ng-if="flight.minClimb != undefined">
+		<span class="text-small--darken">Min Climb:</span> 
+		{{flight.minClimb}}
+	</div>
+	<div ng-if="flight.maxSpeed != undefined">
+		<span class="text-small--darken">Max Speed:</span> 
+		{{flight.maxSpeed}}
+	</div>
+	<div ng-if="flight.avgSpeedCourse != undefined">
+		<span class="text-small--darken">Avg Speed Course:</span> 
+		{{flight.avgSpeedCourse}}
+	</div>
+	<div ng-if="flight.avgSpeedTrack != undefined">
+		<span class="text-small--darken">Avg Speed Track:</span> 
+		{{flight.avgSpeedTrack}}
+	</div>
+</div>

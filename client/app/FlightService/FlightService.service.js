@@ -42,8 +42,8 @@ angular.module('reactorApp')
         return promise;
       },
 
-      getFlightsByPilot: function (pilot, page, limit) {
-        var promise = $http.get('/api/flights/pilot/' + pilot + '/' + page + '/' + limit).success(function() {
+      getFlightsByPilot: function (pilot) {
+        var promise = $http.get('/api/flights/pilot/' + pilot).success(function() {
           console.log('success retrieving flights');
         }).error(function(){
           console.log('getFlightsByPilot error retrieving flights for - ', pilot);
@@ -51,8 +51,8 @@ angular.module('reactorApp')
         return promise;
       },
 
-      getFlightsByClub: function (club, page, limit) {
-        var promise = $http.get('/api/flights/club/' + club + '/' + page + '/' + limit).success(function() {
+      getFlightsByClub: function (club) {
+        var promise = $http.get('/api/flights/club/' + club).success(function() {
           console.log('success retrieving flights');
         }).error(function(){
           console.log('getFlightsByClub error retrieving flights for - ', club);
@@ -61,7 +61,6 @@ angular.module('reactorApp')
       },
 
       getFlightsByType: function (type) {
-        console.log("type: ", type);
         var promise = $http.get('/api/flights/type/' + type).success(function() {
           console.log('success retrieving flights');
         }).error(function(){
@@ -71,7 +70,6 @@ angular.module('reactorApp')
       },
 
       getFlightsBySite: function (site) {
-        console.log("site: ", site);
         var promise = $http.get('/api/flights/site/' + site).success(function() {
           console.log('success retrieving flights');
         }).error(function(){

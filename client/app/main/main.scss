@@ -113,6 +113,14 @@ h1,h2,h3 {
         }
     }
 
-    &__title {
+    &__stats {
+        display: none;
+        &.active {
+            display: block;
+        }
     }
+}
+
+.show-more {
+    padding: rem(10px);
 }

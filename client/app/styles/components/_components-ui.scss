@@ -1,6 +1,24 @@
 // Components - UI
 // -------------------------
 
+.primary-button {
+	background-color: #628297;
+	border: none;
+	color: #fff;
+	padding: rem(5px);
+	width: 100%;
+}
+
+.secondary-button {
+	background: none;
+	border: none;
+	padding: rem(2px) 0;
+
+	&:before {
+		padding-right: rem(5px);
+	}
+}
+
 .filters {
 	overflow: hidden;
 	border: 5px solid green;
