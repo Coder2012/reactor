@@ -2,7 +2,7 @@
 // -------------------------
 
 .primary-button {
-	background-color: #628297;
+	background-color: #321A64;
 	border: none;
 	color: #fff;
 	padding: rem(5px);
@@ -21,8 +21,67 @@
 
 .filters {
 	overflow: hidden;
+	padding: rem(10px);
+
+	&__title {
+		display: block;
+		padding: rem(10px);
+
+		& span {
+			margin-right: rem(5px);
+		}
+
+		& span::before {
+			display: inline-block;
+			color: lightblue;
+		}
+
+	}
+
+	&__search-item {
+		background-color: rgba(0, 0, 0, 0);
+		padding: rem(5px);
+		
+		.filters__container {
+			max-height: 0;
+			overflow: hidden;
+			transition: max-height .75s ease-out;
+		}
+
+		&.active {
+			background-color: rgba(127, 127, 127, 1);
+			transition: background-color 1s ease-in-out;
+
+			& span::before {
+				animation: spin .75s ease-out forwards;
+				display: inline-block;
+			}
+			
+			& .filters__container {
+				max-height: rem(180px);
+				transition: max-height .75s ease-out;
+			}
+		}
+	}
 
 	&__select {
 		color: $base;
+		margin-bottom: rem(5px);
 	}
+
+	&__search-button {
+		background: lighten($base, 10%);
+	}
+
+	&__limit {
+		margin: rem(10px) 0;
+		&-title {
+			margin-bottom: rem(5px);
+		}
+	}
+}
+
+@keyframes spin {
+	from { transform: rotate(0deg); }
+	to { transform: rotate(90deg); }
 }

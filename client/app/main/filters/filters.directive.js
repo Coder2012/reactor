@@ -17,9 +17,9 @@ angular.module('reactorApp')
 
         function handleClick(button){
         	items.each(function(index, item){
-        		var item = $(item).find('[data-filter-link]');
+        		var item = $(item);
         		item.removeClass('active');
-        		button.addClass('active');
+            button.parent().addClass('active');
         	});
         }
       }
