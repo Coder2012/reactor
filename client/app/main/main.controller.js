@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('reactorApp')
-  .controller('MainCtrl', function ($scope, $http, socket, FlightService) {
-    $scope.flights = [1,2,3,4];
-    $scope.pilots = [1,2,3];
+  .controller('MainCtrl', function ($scope, $http, FlightService) {
+    $scope.flights = [];
+    $scope.pilots = [];
     $scope.selectedLimit = 5;
     $scope.flightsLimitTo = $scope.selectedLimit;
 
@@ -72,19 +72,4 @@ angular.module('reactorApp')
       $scope.flightsLimitTo += Number($scope.selectedLimit);
     };
 
-    $scope.addThing = function() {
-      if($scope.newThing === '') {
-        return;
-      }
-      $http.post('/api/things', { name: $scope.newThing });
-      $scope.newThing = '';
-    };
-
-    $scope.deleteThing = function(thing) {
-      $http.delete('/api/things/' + thing._id);
-    };
-
-    $scope.$on('$destroy', function () {
-      socket.unsyncUpdates('thing');
-    });
   });

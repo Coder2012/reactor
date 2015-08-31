@@ -1,37 +1,47 @@
 <div ng-include="'components/navbar/navbar.html'"></div>
 
 <div class="row">
-  <form class="filters">
-    <div class="small-12 medium-3 columns">
+  <form class="filters" data-search-filters>
+    <div class="small-12 medium-3 columns" data-filter-item>
+      <a class="header-medium" data-filter-link><span class="fa fa-arrow-circle-right"></span>Search by pilot</a>
       <div class="filters__select">
         <select class="filters__select header-small" name="pilots" id="pilots" ng-model="selectedPilot" ng-options="p for p in pilots">
           <option value="">Select a pilot</option>
         </select>
-        <button class="text-small" ng-click="reset();updateResultsByPilot(selectedPilot);">Search</button>
+        <button class="primary-button text-small fa fa-arrow-right" ng-click="reset();updateResultsByPilot(selectedPilot);">Search</button>
       </div>
     </div>
-    <div class="small-12 medium-3 columns">
+
+    <div class="small-12 medium-3 columns" data-filter-item>
+      <a class="header-medium" data-filter-link><span class="fa fa-arrow-circle-right"></span>Search by club</a>
       <div class="filters__select">
         <select class="filters__select header-small" name="club" id="club" ng-model="selectedClub" ng-options="p for p in clubs">
           <option value="">Select a club</option>
         </select>
-        <button class="text-small" ng-click="reset();updateResultsByClub(selectedClub);">Search</button>
+        <button class="primary-button text-small fa fa-arrow-right" ng-click="reset();updateResultsByClub(selectedClub);">Search</button>
       </div>
     </div>
-    <div class="small-12 medium-3 columns">
+
+    <div class="small-12 medium-3 columns" data-filter-item>
+      <a class="header-medium" data-filter-link><span class="fa fa-arrow-circle-right"></span>Search by type</a>
       <div class="filters__select">
-        <select class="filters__select header-small" name="type" id="type" ng-model="selectedType" ng-change="updateResultsByType(selectedType);" ng-options="p for p in types">
+        <select class="filters__select header-small" name="type" id="type" ng-model="selectedType" ng-options="p for p in types">
           <option value="">Select a flight type</option>
         </select>
+        <button class="primary-button text-small fa fa-arrow-right" ng-click="reset();updateResultsByType(selectedType);">Search</button>
       </div>
     </div>
-    <div class="small-12 medium-3 columns">
+
+    <div class="small-12 medium-3 columns" data-filter-item>
+      <a class="header-medium" data-filter-link><span class="fa fa-arrow-circle-right"></span>Search by site</a>
       <div class="filters__select">
-        <select class="filters__select header-small" name="site" id="site" ng-model="selectedSite" ng-change="updateResultsBySite(selectedSite);" ng-options="p for p in sites">
+        <select class="filters__select header-small" name="site" id="site" ng-model="selectedSite" ng-options="p for p in sites">
           <option value="">Select a site</option>
         </select>
+        <button class="primary-button text-small fa fa-arrow-right" ng-click="reset();updateResultsBySite(selectedSite);">Search</button>
       </div>
     </div>
+
     <select name="limit" id="limit" class="filters__select header-small" ng-model="selectedLimit">
       <option value="">Show results</option>
       <option value="5">5</option>
