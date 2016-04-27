@@ -116,9 +116,15 @@ function scrapePilots() {
 //--------------------------------------------------
 
 
-var job = schedule.scheduleJob('59 * * * *', function(){
-	console.log("message");
-	scrapePilots();
+// var job = schedule.scheduleJob('59 * * * *', function(){
+// 	console.log("message");
+//   scrapePilots();
+// });
+
+var rule = new schedule.RecurrenceRule();
+rule.minute = 30;
+var job = schedule.scheduleJob(rule, function(){
+	 scrapePilots();
 });
 
 // Expose app
