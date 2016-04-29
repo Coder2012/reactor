@@ -61,10 +61,6 @@ schema.pre('save', function(next){
 });
 
 function generateUrls(limit) {
-  // test url for errors
-  //http://www.xcleague.com/xc/flights/20142100.html?vx=0111
-  //http://www.xcleague.com/xc/leagues/latest.html
-  //http://www.xcleague.com/xc/leagues/all-1.html
   var url = domain + '/xc/leagues/latest.html';
   var urls= [url];
 
@@ -107,7 +103,7 @@ function scrapePilots() {
         }
       });
 
-    };
+    }
     console.log("all models saved to MongoDB");
 
   });
@@ -122,9 +118,10 @@ function scrapePilots() {
 // });
 
 var rule = new schedule.RecurrenceRule();
-rule.minute = 30;
+rule.minute = 1;
 var job = schedule.scheduleJob(rule, function(){
-	 scrapePilots();
+  console.log("scheduleJob run");
+	 //scrapePilots();
 });
 
 // Expose app
