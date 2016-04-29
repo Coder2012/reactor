@@ -73,7 +73,8 @@ Pages = generateUrls();
 function scrapePilots() {
   // if the Pages array is empty, we are Done!!
   if (!Pages.length) {
-    return console.log('Done!!!!');
+    Pages = generateUrls();
+    return console.log('Scraping complete');
   }
   var url = Pages.pop();
   var scraper = new Scraper(url);
