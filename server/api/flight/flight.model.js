@@ -3,28 +3,31 @@
 var mongoose = require('mongoose');
 
 var FlightSchema = new mongoose.Schema({
-	_id: String,
+	identifier: String,
 	pilot: String,
 	title: String,
 	club: String,
 	glider: String,
 	date: Object,
 	start: String,
+	startNum: Number,
 	finish: String,
+	finishNum: Number,
 	duration: String,
+	durationNum: Number,
 	takeoff: String,
 	landing: String,
-	total: String,
+	total: Number,
 	multiplier: String,
-	score: String,
-	maxHeight: String,
-	lowHeight: String,
-	takeoffHeight: String,
-	maxClimb: String,
-	minClimb: String,
-	maxSpeed: String,
-	avgSpeedCourse: String,
-	avgSpeedTrack: String
+	score: Number,
+	maxHeight: Number,
+	lowHeight: Number,
+	takeoffHeight: Number,
+	maxClimb: Number,
+	minClimb: Number,
+	maxSpeed: Number,
+	avgSpeedCourse: Number,
+	avgSpeedTrack: Number
 });
 
 module.exports = {

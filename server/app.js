@@ -45,15 +45,13 @@ var domain = 'http://www.xcleague.com';
 var flightUrls = [];
 
 schema.pre('save', function(next){
-  var id = this.pilot + this.start + this.finish;
-  this._id = id.replace(/ /g, '');
-  console.log(this._id);
+  var id = this.identifier;
 
-    FlightModel.find({_id : this._id}, function (err, docs) {
+    FlightModel.find({identifier : id}, function (err, docs) {
         if (!docs.length){
             next();
         }else{                
-            console.log('id exists: ', id);
+            // console.log('id exists: ', id);
             next(new Error());
         }
     });
@@ -71,7 +69,6 @@ function generateUrls(limit) {
 Pages = generateUrls();
 
 function scrapePilots() {
-  // if the Pages array is empty, we are Done!!
   if (!Pages.length) {
     Pages = generateUrls();
     return console.log('Scraping complete');
@@ -79,28 +76,20 @@ function scrapePilots() {
   var url = Pages.pop();
   var scraper = new Scraper(url);
   var model;
-  console.log('Requests Left: ' + Pages.length);
-  // if the error occurs we still want to create our
-  // next request
+
   scraper.on('error', function (error) {
     console.log('bot error received from Scraper: ', error);
     scraper.resume();
   });
-  // if the request completed successfully
-  // we want to store the results in our database
 
   scraper.on('complete', function (models) {
     
     for (var i = 0; i < models.length; i++) {
       model = new FlightModel(models[i]);
 
-      var id = model.pilot + model.start + model.finish;
-      id = id.replace(/ /g, '');
-      model._id = id;
-
       model.save(function(err) {
         if (err) {
-          console.log('Database err saving: ' + url);
+          // console.log('Database err saving: ' + model.identifier);
         }
       });
 
@@ -112,17 +101,12 @@ function scrapePilots() {
 
 //--------------------------------------------------
 
-
-// var job = schedule.scheduleJob('59 * * * *', function(){
-// 	console.log("message");
-//   scrapePilots();
-// });
-
 var rule = new schedule.RecurrenceRule();
-rule.minute = 1;
+rule.minute = new schedule.Range(0, 59, 30);
+
 var job = schedule.scheduleJob(rule, function(){
-  console.log("scheduleJob run");
-	 //scrapePilots();
+  console.log("scheduleJob run at: ", new Date());
+	 scrapePilots();
 });
 
 // Expose app
