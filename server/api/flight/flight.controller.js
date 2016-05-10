@@ -130,6 +130,7 @@ exports.findByTimeRange = function(req, res) {
 
 exports.findByDate = function(req, res) {
   var date = Number(parseDate(req.params.date));
+  console.log("findByDate: ", date);
   Flight.find({date: date}, function (err, flight) {
     if(err) { return handleError(res, err); }
     if(!flight) { return res.send(404); }

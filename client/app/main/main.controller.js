@@ -6,6 +6,7 @@ angular.module('reactorApp')
     $scope.pilots = [];
     $scope.selectedLimit = 5;
     $scope.flightsLimitTo = $scope.selectedLimit;
+    $scope.selectedDate = new Date();
 
     FlightService.getPilots().then(function(response){
       // console.log("response: ", response.data);

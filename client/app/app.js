@@ -4,6 +4,7 @@ angular.module('reactorApp', [
   'ngCookies',
   'ngResource',
   'ngSanitize',
+  'datePicker',
   'ui.router'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {

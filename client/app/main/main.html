@@ -60,6 +60,18 @@
   </form>
 </div>
 
+<div class="row">
+  <div class="dropdown">
+    <a class="dropdown-toggle btn btn-danger">
+        Select a date: {{(selectedDate|date)}}
+    </a>
+
+    <div class="dropdown-menu" ng-click="$event.preventDefault();$event.stopPropagation()">
+        <div date-picker="selectedDate" min-view="date"></div>
+    </div>
+  </div>
+</div>
+
 <div class="row" ng-repeat="flight in flights | limitTo: flightsLimitTo">
   <div class="flight">
     <div class="flight__inner">
