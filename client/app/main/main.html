@@ -67,8 +67,9 @@
     </a>
 
     <div class="dropdown-menu" ng-click="$event.preventDefault();$event.stopPropagation()">
-        <div date-picker="selectedDate" min-view="date" date-change="onDateUpdated"></div>
+        <div date-picker="selectedDate" min-view="date" ></div>
     </div>
+    <button class="primary-button text-small" ng-click="reset();updateResultsByDate();">Search</button>
   </div>
 </div>
 

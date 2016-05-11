@@ -8,15 +8,6 @@ angular.module('reactorApp')
     $scope.flightsLimitTo = $scope.selectedLimit;
     $scope.selectedDate = new Date();
 
-    $scope.onDateUpdated = function() {
-      FlightService.getFlightsByDate($scope.selectedDate).then(function(response){
-        _.forEach(response.data, function(item, index){
-          updateItem(item);
-        });
-        $scope.flights = response.data;
-      })
-    }
-
     FlightService.getPilots().then(function(response){
       // console.log("response: ", response.data);
       $scope.pilots = response.data.sort();
@@ -72,6 +63,19 @@ angular.module('reactorApp')
         $scope.flights = response.data;
       });
     };
+
+    $scope.updateResultsByDate = function(site){
+      FlightService.getFlightsByDate($scope.selectedDate).then(function(response){
+        _.forEach(response.data, function(item, index){
+          updateItem(item);
+        });
+        $scope.flights = response.data;
+      })
+    };
+
+    $scope.reset = function() {
+      console.log("reset");
+    }
 
     function updateItem(item) {
       var d = item.date;
