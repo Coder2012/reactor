@@ -78,6 +78,15 @@ angular.module('reactorApp')
         return promise;
       },
 
+      getFlightsByDate: function (date) {
+        var promise = $http.get('/api/flights/date/' + date).success(function() {
+          console.log('success retrieving flights');
+        }).error(function(){
+          console.log('getFlightsByDate error retrieving flights for - ', date);
+        });
+        return promise;
+      },
+
       getFlightsCount: function () {
         var promise = $http.get('/api/flights/flightsCount').success(function() {
           console.log('success retrieving flights');

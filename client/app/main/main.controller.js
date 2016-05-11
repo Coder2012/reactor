@@ -8,6 +8,15 @@ angular.module('reactorApp')
     $scope.flightsLimitTo = $scope.selectedLimit;
     $scope.selectedDate = new Date();
 
+    $scope.onDateUpdated = function() {
+      FlightService.getFlightsByDate($scope.selectedDate).then(function(response){
+        _.forEach(response.data, function(item, index){
+          updateItem(item);
+        });
+        $scope.flights = response.data;
+      })
+    }
+
     FlightService.getPilots().then(function(response){
       // console.log("response: ", response.data);
       $scope.pilots = response.data.sort();

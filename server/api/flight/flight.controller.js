@@ -2,7 +2,7 @@
 
 var _ = require('lodash');
 var Flight = require('./flight.model').flights;
-//var moment = require('')
+var moment = require('moment');
 
 exports.index = function(req, res) {
   console.log("index");
@@ -129,9 +129,8 @@ exports.findByTimeRange = function(req, res) {
 };
 
 exports.findByDate = function(req, res) {
-  var date = Number(parseDate(req.params.date));
-  console.log("findByDate: ", date);
-  Flight.find({date: date}, function (err, flight) {
+  var date = req.params.date;
+  Flight.find({date: Number(1460847600000)}, function (err, flight) {
     if(err) { return handleError(res, err); }
     if(!flight) { return res.send(404); }
     return res.json(flight);
