@@ -65,7 +65,9 @@ angular.module('reactorApp')
     };
 
     $scope.updateResultsByDate = function(site){
-      FlightService.getFlightsByDate($scope.selectedDate).then(function(response){
+      var date = moment($scope.selectedDate).add(1, 'hours').valueOf();
+      console.log("date: ", date);
+      FlightService.getFlightsByDate(date).then(function(response){
         _.forEach(response.data, function(item, index){
           updateItem(item);
         });
