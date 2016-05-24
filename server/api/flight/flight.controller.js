@@ -4,257 +4,284 @@ var _ = require('lodash');
 var Flight = require('./flight.model').flights;
 var moment = require('moment');
 
-exports.index = function(req, res) {
-  console.log("index");
-  Flight.find(function (err, flights) {
-    if(err) { return handleError(res, err); }
-    return res.json(200, flights);
-  });
+exports.index = (req, res) => {
+    Flight.find((err, flights) => {
+        if (err) {
+            return handleError(res, err); }
+        return res.json(200, flights);
+    });
 };
 
-exports.getPilots = function(req, res) {
-  Flight.distinct('pilot', {}, function (err, flights) {
-    if(err) { return handleError(res, err); }
-    return res.json(200, flights);
-  });
+// START handle initial requests for the search data
+
+exports.getPilots = (req, res) => getDistinctData('pilot', req, res);
+exports.getTitles = (req, res) => getDistinctData('title', req, res);
+exports.getTypes = (req, res) => getDistinctData('title', req, res);
+exports.getClubs = (req, res) => getDistinctData('club', req, res);
+exports.getSites = (req, res) => getDistinctData('takeoff', req, res);
+
+function getDistinctData(type, req, res) {
+    Flight.distinct(type, {}, (err, flights) => {
+        if (err) {
+            return handleError(res, err); }
+        return res.json(200, flights);
+    });
+}
+
+// END requests for search data
+
+exports.show = (req, res) => {
+    Flight.findById(req.params.id, (err, flights) => {
+        if (err) {
+            return handleError(res, err); }
+        if (!flights) {
+            return res.send(404); }
+        return res.json(flights);
+    });
 };
 
-exports.getTitles = function(req, res) {
-  Flight.distinct('title', {}, function (err, flights) {
-    if(err) { return handleError(res, err); }
-    return res.json(200, flights);
-  });
+exports.findByPilot = (req, res) => {
+    var limit = Number(req.params.limit);
+    var page = Number(req.params.page);
+
+    Flight.find({ pilot: req.params.pilot }).sort('-date').skip((page - 1) * limit)
+        .limit(limit).exec((err, flights) => {
+            if (err) {
+                return handleError(res, err); }
+            if (!flights) {
+                return res.send(404); }
+            return res.json(flights);
+        });
 };
 
-exports.getClubs = function(req, res) {
-  Flight.distinct('club', {}, function (err, flights) {
-    if(err) { return handleError(res, err); }
-    return res.json(200, flights);
-  });
+exports.findByClub = (req, res) => {
+    var limit = Number(req.params.limit);
+    var page = Number(req.params.page);
+
+    Flight.find({ club: req.params.club }).sort('-date').skip((page - 1) * limit)
+        .limit(limit).exec((err, flights) => {
+            if (err) {
+                return handleError(res, err); }
+            if (!flights) {
+                return res.send(404); }
+            return res.json(flights);
+        });
 };
 
-exports.getTypes = function(req, res) {
-  Flight.distinct('title', {}, function (err, flights) {
-    if(err) { return handleError(res, err); }
-    return res.json(200, flights);
-  });
+exports.findByType = (req, res) => {
+    Flight.find({ title: req.params.type }, (err, flights) => {
+        if (err) {
+            return handleError(res, err); }
+        if (!flights) {
+            return res.send(404); }
+        return res.json(flights);
+    });
 };
 
-exports.getSites = function(req, res) {
-  Flight.distinct('takeoff', {}, function (err, flights) {
-    if(err) { return handleError(res, err); }
-    return res.json(200, flights);
-  });
+exports.findBySite = (req, res) => {
+    Flight.find({ takeoff: req.params.site }, (err, flights) => {
+        if (err) {
+            return handleError(res, err); }
+        if (!flights) {
+            return res.send(404); }
+        return res.json(flights);
+    });
 };
 
-exports.show = function(req, res) {
-  console.log("show");
-  Flight.findById(req.params.id, function (err, flight) {
-    if(err) { return handleError(res, err); }
-    if(!flight) { return res.send(404); }
-    return res.json(flight);
-  });
+exports.findByGlider = (req, res) => {
+    Flight.find({ glider: req.params.glider }, (err, flights) => {
+        if (err) {
+            return handleError(res, err); }
+        if (!flights) {
+            return res.send(404); }
+        return res.json(flights);
+    });
 };
 
-exports.findByPilot = function(req, res) {
-  var limit = Number(req.params.limit);
-  var page = Number(req.params.page);
-
-  Flight.find({pilot: req.params.pilot}).sort('-date').skip((page-1)*limit)
-  .limit(limit).exec(function (err, flight) {
-    if(err) { return handleError(res, err); }
-    if(!flight) { return res.send(404); }
-    return res.json(flight);
-  });
+exports.findByStartTime = (req, res) => {
+    Flight.find({ start: req.params.start }, (err, flights) => {
+        if (err) {
+            return handleError(res, err); }
+        if (!flights) {
+            return res.send(404); }
+        return res.json(flights);
+    });
 };
 
-exports.findByClub = function(req, res) {
-  var limit = Number(req.params.limit);
-  var page = Number(req.params.page);
-  
-  Flight.find({club: req.params.club}).sort('-date').skip((page-1)*limit)
-  .limit(limit).exec(function (err, flight) {
-    if(err) { return handleError(res, err); }
-    if(!flight) { return res.send(404); }
-    return res.json(flight);
-  });
+exports.findByFinishTime = (req, res) => {
+    Flight.find({ finish: req.params.finish }, (err, flights) => {
+        if (err) {
+            return handleError(res, err); }
+        if (!flights) {
+            return res.send(404); }
+        return res.json(flights);
+    });
 };
 
-exports.findByType = function(req, res) {
-  Flight.find({title: req.params.type}, function (err, flight) {
-    if(err) { return handleError(res, err); }
-    if(!flight) { return res.send(404); }
-    return res.json(flight);
-  });
+exports.findByTimeRange = (req, res) => {
+    Flight.find({ start: { $gte: req.params.start }, finish: { $lte: req.params.finish } }, (err, flights) => {
+        if (err) {
+            return handleError(res, err); }
+        if (!flights) {
+            return res.send(404); }
+        return res.json(flights);
+    });
 };
 
-exports.findBySite = function(req, res) {
-  Flight.find({takeoff: req.params.site}, function (err, flight) {
-    if(err) { return handleError(res, err); }
-    if(!flight) { return res.send(404); }
-    return res.json(flight);
-  });
+exports.findByDate = (req, res) => {
+    var date = req.params.date;
+    Flight.find({ date: Number(date) }, (err, flights) => {
+        if (err) {
+            return handleError(res, err); }
+        if (!flights) {
+            return res.send(404); }
+        return res.json(flights);
+    });
 };
 
-exports.findByGlider = function(req, res) {
-  Flight.find({glider: req.params.glider}, function (err, flight) {
-    if(err) { return handleError(res, err); }
-    if(!flight) { return res.send(404); }
-    return res.json(flight);
-  });
+exports.findByDateRange = (req, res) => {
+    var startDate = Number(parseDate(req.params.start));
+    var finishDate = Number(parseDate(req.params.finish));
+    Flight.find({ date: { $gte: startDate, $lte: finishDate } }, (err, flights) => {
+        if (err) {
+            return handleError(res, err); }
+        if (!flights) {
+            return res.send(404); }
+        return res.json(flights);
+    });
 };
 
-exports.findByStartTime = function(req, res) {
-  Flight.find({start: req.params.start}, function (err, flight) {
-    if(err) { return handleError(res, err); }
-    if(!flight) { return res.send(404); }
-    return res.json(flight);
-  });
+exports.findByDuration = (req, res) => {
+    Flight.find({ duration: req.params.duration }, (err, flights) => {
+        if (err) {
+            return handleError(res, err); }
+        if (!flights) {
+            return res.send(404); }
+        return res.json(flights);
+    });
 };
 
-exports.findByFinishTime = function(req, res) {
-  Flight.find({finish: req.params.finish}, function (err, flight) {
-    if(err) { return handleError(res, err); }
-    if(!flight) { return res.send(404); }
-    return res.json(flight);
-  });
+exports.findByLanding = (req, res) => {
+    Flight.find({ landing: req.params.landing }, (err, flights) => {
+        if (err) {
+            return handleError(res, err); }
+        if (!flights) {
+            return res.send(404); }
+        return res.json(flights);
+    });
 };
 
-exports.findByTimeRange = function(req, res) {
-  Flight.find({start: {$gte: req.params.start}, finish: {$lte: req.params.finish}}, function (err, flight) {
-    if(err) { return handleError(res, err); }
-    if(!flight) { return res.send(404); }
-    return res.json(flight);
-  });
+exports.findByDistance = (req, res) => {
+    Flight.find({ distance: req.params.distance }, (err, flights) => {
+        if (err) {
+            return handleError(res, err); }
+        if (!flights) {
+            return res.send(404); }
+        return res.json(flights);
+    });
 };
 
-exports.findByDate = function(req, res) {
-  var date = req.params.date;
-  Flight.find({date: Number(date)}, function (err, flight) {
-    if(err) { return handleError(res, err); }
-    if(!flight) { return res.send(404); }
-    return res.json(flight);
-  });
+exports.findByTotal = (req, res) => {
+    Flight.find({ total: req.params.total }, (err, flights) => {
+        if (err) {
+            return handleError(res, err); }
+        if (!flights) {
+            return res.send(404); }
+        return res.json(flights);
+    });
 };
 
-exports.findByDateRange = function(req, res) {
-  var startDate = Number(parseDate(req.params.start));
-  var finishDate = Number(parseDate(req.params.finish));
-  Flight.find({date: {$gte: startDate, $lte: finishDate}}, function (err, flight) {
-    if(err) { return handleError(res, err); }
-    if(!flight) { return res.send(404); }
-    return res.json(flight);
-  });
+exports.findByMultiplier = (req, res) => {
+    Flight.find({ multiplier: req.params.multiplier }, (err, flights) => {
+        if (err) {
+            return handleError(res, err); }
+        if (!flights) {
+            return res.send(404); }
+        return res.json(flights);
+    });
 };
 
-exports.findByDuration = function(req, res) {
-  Flight.find({duration: req.params.duration}, function (err, flight) {
-    if(err) { return handleError(res, err); }
-    if(!flight) { return res.send(404); }
-    return res.json(flight);
-  });
+exports.findByScore = (req, res) => {
+    Flight.find({ score: req.params.score }, (err, flights) => {
+        if (err) {
+            return handleError(res, err); }
+        if (!flights) {
+            return res.send(404); }
+        return res.json(flights);
+    });
 };
 
-exports.findByLanding = function(req, res) {
-  Flight.find({landing: req.params.landing}, function (err, flight) {
-    if(err) { return handleError(res, err); }
-    if(!flight) { return res.send(404); }
-    return res.json(flight);
-  });
+exports.getFlightsCount = (req, res) => {
+    Flight.count({}, (err, flights) => {
+        if (err) {
+            return handleError(res, err); }
+        if (!flights) {
+            return res.send(404); }
+        return res.json(flights);
+    });
 };
 
-exports.findByDistance = function(req, res) {
-  Flight.find({distance: req.params.distance}, function (err, flight) {
-    if(err) { return handleError(res, err); }
-    if(!flight) { return res.send(404); }
-    return res.json(flight);
-  });
-};
-
-exports.findByTotal = function(req, res) {
-  Flight.find({total: req.params.total}, function (err, flight) {
-    if(err) { return handleError(res, err); }
-    if(!flight) { return res.send(404); }
-    return res.json(flight);
-  });
-};
-
-exports.findByMultiplier = function(req, res) {
-  Flight.find({multiplier: req.params.multiplier}, function (err, flight) {
-    if(err) { return handleError(res, err); }
-    if(!flight) { return res.send(404); }
-    return res.json(flight);
-  });
-};
-
-exports.findByScore = function(req, res) {
-  Flight.find({score: req.params.score}, function (err, flight) {
-    if(err) { return handleError(res, err); }
-    if(!flight) { return res.send(404); }
-    return res.json(flight);
-  });
-};
-
-exports.getFlightsCount = function(req, res) {
-  Flight.count({}, function (err, flight) {
-    if(err) { return handleError(res, err); }
-    if(!flight) { return res.send(404); }
-    return res.json(flight);
-  });
-};
-
-exports.getFlightsByDateCount = function(req, res) {
-  var date = Number(parseDate(req.params.date));
-  Flight.count({date: date}, function (err, flight) {
-    if(err) { return handleError(res, err); }
-    if(!flight) { return res.send(404); }
-    return res.json(flight);
-  });
+exports.getFlightsByDateCount = (req, res) => {
+    var date = Number(parseDate(req.params.date));
+    Flight.count({ date: date }, (err, flights) => {
+        if (err) {
+            return handleError(res, err); }
+        if (!flights) {
+            return res.send(404); }
+        return res.json(flights);
+    });
 };
 
 // Creates a new flight in the DB.
-exports.create = function(req, res) {
-  Flight.create(req.body, function(err, flight) {
-    if(err) { return handleError(res, err); }
-    return res.json(201, flight);
-  });
+exports.create = (req, res) => {
+    Flight.create(req.body, function(err, flights) {
+        if (err) {
+            return handleError(res, err); }
+        return res.json(201, flights);
+    });
 };
 
 // Updates an existing flight in the DB.
-exports.update = function(req, res) {
-  if(req.body._id) { delete req.body._id; }
-  Flight.findById(req.params.id, function (err, flight) {
-    if (err) { return handleError(res, err); }
-    if(!flight) { return res.send(404); }
-    var updated = _.merge(flight, req.body);
-    updated.save(function (err) {
-      if (err) { return handleError(res, err); }
-      return res.json(200, flight);
+exports.update = (req, res) => {
+    if (req.body._id) { delete req.body._id; }
+    Flight.findById(req.params.id, (err, flights) => {
+        if (err) {
+            return handleError(res, err); }
+        if (!flights) {
+            return res.send(404); }
+        var updated = _.merge(flights, req.body);
+        updated.save(function(err) {
+            if (err) {
+                return handleError(res, err); }
+            return res.json(200, flights);
+        });
     });
-  });
 };
 
 // Deletes a flight from the DB.
-exports.destroy = function(req, res) {
-  Flight.findById(req.params.id, function (err, flight) {
-    if(err) { return handleError(res, err); }
-    if(!flight) { return res.send(404); }
-    flight.remove(function(err) {
-      if(err) { return handleError(res, err); }
-      return res.send(204);
+exports.destroy = (req, res) => {
+    Flight.findById(req.params.id, (err, flights) => {
+        if (err) {
+            return handleError(res, err); }
+        if (!flights) {
+            return res.send(404); }
+        flights.remove(function(err) {
+            if (err) {
+                return handleError(res, err); }
+            return res.send(204);
+        });
     });
-  });
 };
 
 function handleError(res, err) {
-  return res.send(500, err);
+    return res.send(500, err);
 }
 
-function parseDate(str1){
-  // str1 format should be dd/mm/yyyy. Separator can be anything e.g. / or -. It wont effect
-  var dt1   = parseInt(str1.substring(0,2));
-  var mon1  = parseInt(str1.substring(3,5));
-  var yr1   = parseInt(str1.substring(6,10));
-  var date1 = new Date(yr1, mon1-1, dt1);
-  return date1;
+function parseDate(str1) {
+    // str1 format should be dd/mm/yyyy. Separator can be anything e.g. / or -. It wont effect
+    var dt1 = parseInt(str1.substring(0, 2));
+    var mon1 = parseInt(str1.substring(3, 5));
+    var yr1 = parseInt(str1.substring(6, 10));
+    var date1 = new Date(yr1, mon1 - 1, dt1);
+    return date1;
 }
