@@ -40,11 +40,16 @@ exports.show = (req, res) => {
     });
 };
 
-exports.findByPilot = (req, res) => {
+// START requests sorted by date
+
+exports.findByPilot = (req, res) => getSortedData({ pilot: req.params.pilot }, req, res)
+exports.findByClub = (req, res) => getSortedData({ club: req.params.club }, req, res)
+
+function getSortedData(query, req, res) {
     var limit = Number(req.params.limit);
     var page = Number(req.params.page);
 
-    Flight.find({ pilot: req.params.pilot }).sort('-date').skip((page - 1) * limit)
+    Flight.find(query).sort('-date').skip((page - 1) * limit)
         .limit(limit).exec((err, flights) => {
             if (err) {
                 return handleError(res, err); }
@@ -52,85 +57,39 @@ exports.findByPilot = (req, res) => {
                 return res.send(404); }
             return res.json(flights);
         });
-};
+}
 
-exports.findByClub = (req, res) => {
-    var limit = Number(req.params.limit);
-    var page = Number(req.params.page);
+// END requests sorted by date
 
-    Flight.find({ club: req.params.club }).sort('-date').skip((page - 1) * limit)
-        .limit(limit).exec((err, flights) => {
-            if (err) {
-                return handleError(res, err); }
-            if (!flights) {
-                return res.send(404); }
-            return res.json(flights);
-        });
-};
+// START standard requests
 
-exports.findByType = (req, res) => {
-    Flight.find({ title: req.params.type }, (err, flights) => {
+exports.findByType = (req, res) => getData({ title: req.params.type }, req, res)
+exports.findBySite = (req, res) => getData({ takeoff: req.params.site }, req, res)
+exports.findByGlider = (req, res) => getData({ glider: req.params.glider }, req, res)
+exports.findByStartTime = (req, res) => getData({ start: req.params.start }, req, res)
+exports.findByFinishTime = (req, res) => getData({ finish: req.params.finish }, req, res)
+exports.findByDate = (req, res) => getData({ date: Number(req.params.date) }, req, res)
+exports.findByDuration = (req, res) => getData({ duration: req.params.duration }, req, res)
+exports.findByLanding = (req, res) => getData({ landing: req.params.landing }, req, res)
+exports.findByDistance = (req, res) => getData({ distance: req.params.distance }, req, res)
+exports.findByTotal = (req, res) => getData({ total: req.params.total }, req, res)
+exports.findByMultiplier = (req, res) => getData({ multiplier: req.params.multiplier }, req, res)
+exports.findByScore = (req, res) => getData({ score: req.params.score }, req, res)
+
+function getData(query, req, res) {
+    Flight.find(query, (err, flights) => {
         if (err) {
             return handleError(res, err); }
         if (!flights) {
             return res.send(404); }
         return res.json(flights);
     });
-};
+}
 
-exports.findBySite = (req, res) => {
-    Flight.find({ takeoff: req.params.site }, (err, flights) => {
-        if (err) {
-            return handleError(res, err); }
-        if (!flights) {
-            return res.send(404); }
-        return res.json(flights);
-    });
-};
-
-exports.findByGlider = (req, res) => {
-    Flight.find({ glider: req.params.glider }, (err, flights) => {
-        if (err) {
-            return handleError(res, err); }
-        if (!flights) {
-            return res.send(404); }
-        return res.json(flights);
-    });
-};
-
-exports.findByStartTime = (req, res) => {
-    Flight.find({ start: req.params.start }, (err, flights) => {
-        if (err) {
-            return handleError(res, err); }
-        if (!flights) {
-            return res.send(404); }
-        return res.json(flights);
-    });
-};
-
-exports.findByFinishTime = (req, res) => {
-    Flight.find({ finish: req.params.finish }, (err, flights) => {
-        if (err) {
-            return handleError(res, err); }
-        if (!flights) {
-            return res.send(404); }
-        return res.json(flights);
-    });
-};
+// END standard requests
 
 exports.findByTimeRange = (req, res) => {
     Flight.find({ start: { $gte: req.params.start }, finish: { $lte: req.params.finish } }, (err, flights) => {
-        if (err) {
-            return handleError(res, err); }
-        if (!flights) {
-            return res.send(404); }
-        return res.json(flights);
-    });
-};
-
-exports.findByDate = (req, res) => {
-    var date = req.params.date;
-    Flight.find({ date: Number(date) }, (err, flights) => {
         if (err) {
             return handleError(res, err); }
         if (!flights) {
@@ -143,66 +102,6 @@ exports.findByDateRange = (req, res) => {
     var startDate = Number(parseDate(req.params.start));
     var finishDate = Number(parseDate(req.params.finish));
     Flight.find({ date: { $gte: startDate, $lte: finishDate } }, (err, flights) => {
-        if (err) {
-            return handleError(res, err); }
-        if (!flights) {
-            return res.send(404); }
-        return res.json(flights);
-    });
-};
-
-exports.findByDuration = (req, res) => {
-    Flight.find({ duration: req.params.duration }, (err, flights) => {
-        if (err) {
-            return handleError(res, err); }
-        if (!flights) {
-            return res.send(404); }
-        return res.json(flights);
-    });
-};
-
-exports.findByLanding = (req, res) => {
-    Flight.find({ landing: req.params.landing }, (err, flights) => {
-        if (err) {
-            return handleError(res, err); }
-        if (!flights) {
-            return res.send(404); }
-        return res.json(flights);
-    });
-};
-
-exports.findByDistance = (req, res) => {
-    Flight.find({ distance: req.params.distance }, (err, flights) => {
-        if (err) {
-            return handleError(res, err); }
-        if (!flights) {
-            return res.send(404); }
-        return res.json(flights);
-    });
-};
-
-exports.findByTotal = (req, res) => {
-    Flight.find({ total: req.params.total }, (err, flights) => {
-        if (err) {
-            return handleError(res, err); }
-        if (!flights) {
-            return res.send(404); }
-        return res.json(flights);
-    });
-};
-
-exports.findByMultiplier = (req, res) => {
-    Flight.find({ multiplier: req.params.multiplier }, (err, flights) => {
-        if (err) {
-            return handleError(res, err); }
-        if (!flights) {
-            return res.send(404); }
-        return res.json(flights);
-    });
-};
-
-exports.findByScore = (req, res) => {
-    Flight.find({ score: req.params.score }, (err, flights) => {
         if (err) {
             return handleError(res, err); }
         if (!flights) {
